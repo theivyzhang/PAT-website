@@ -104,25 +104,25 @@
     }
     .hero h1 .accent { color: var(--accent); }
     .hero .subtitle {
-      font-size: 18px; color: var(--text-soft);
-      max-width: 760px; margin: 0 auto 28px; text-align: center;
+      font-size: 17px; color: var(--text-soft);
+      max-width: 720px; margin: 0 auto 24px; text-align: center;
     }
     .hero .container { text-align: center; }
     .authors {
-      font-size: 16px; color: var(--text); margin: 24px 0 6px;
+      font-size: 15.5px; color: var(--text); margin: 18px 0 4px;
       max-width: 900px; margin-left: auto; margin-right: auto;
     }
     .authors a { color: var(--primary); font-weight: 500; }
     .authors sup { color: var(--text-mute); font-weight: 600; margin: 0 1px; }
     .affil {
-      font-size: 14px; color: var(--text-mute); margin-bottom: 6px;
+      font-size: 13px; color: var(--text-mute); margin-bottom: 2px;
       max-width: 900px; margin-left: auto; margin-right: auto;
     }
-    .equal-note { font-size: 13px; color: var(--text-mute); margin-bottom: 22px; }
+    .equal-note { font-size: 12px; color: var(--text-mute); margin-bottom: 20px; }
 
     .affil-logos {
       display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
-      gap: 28px 36px;
+      gap: 22px 32px;
       margin: 0 auto 32px;
       max-width: 900px;
     }
@@ -132,13 +132,15 @@
       opacity: 0.85;
       transition: opacity 0.15s ease, transform 0.15s ease;
     }
-    .affil-logos img.logo-xl { height: 150px; max-width: 360px; }
+    .affil-logos img.logo-md { height: 72px; max-width: 200px; }
+    .affil-logos img.logo-xl { height: 92px; max-width: 240px; }
     .affil-logos a { display: inline-flex; align-items: center; }
     .affil-logos a:hover img { opacity: 1; transform: translateY(-1px); }
     @media (max-width: 600px) {
-      .affil-logos { gap: 20px 24px; }
+      .affil-logos { gap: 18px 22px; }
       .affil-logos img { height: 40px; max-width: 120px; }
-      .affil-logos img.logo-xl { height: 115px; max-width: 270px; }
+      .affil-logos img.logo-md { height: 56px; max-width: 150px; }
+      .affil-logos img.logo-xl { height: 72px; max-width: 200px; }
     }
 
     .btn-row {
@@ -179,10 +181,45 @@
     /* ===== Section soft bg ===== */
     .soft { background: var(--bg-soft); }
 
+    /* ===== Venue badge — two-tone split with SVG trophy ===== */
+    .venue-badge {
+      margin: 14px 0 22px;
+    }
+    .venue-badge a {
+      display: inline-flex; align-items: stretch; overflow: hidden;
+      border-radius: 6px; text-decoration: none;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 4px 14px rgba(0,0,0,0.07);
+      font-size: 12.5px; font-weight: 700; letter-spacing: 0.05em;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .venue-badge a:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.1);
+    }
+    .venue-badge .trophy {
+      background: var(--primary); color: white;
+      padding: 8px 13px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .venue-badge .trophy svg { width: 18px; height: 18px; }
+    .venue-badge .venue {
+      background: white; color: var(--text);
+      border: 1px solid var(--primary); border-left: none;
+      padding: 8px 14px;
+      display: flex; align-items: center;
+      letter-spacing: 0.03em; text-transform: uppercase;
+    }
+
+    /* ===== Shared section intro paragraph ===== */
+    .section-intro {
+      max-width: 900px; margin: 12px 0 0;
+      color: var(--text-soft);
+    }
+
     /* ===== Abstract ===== */
     .abstract p {
       font-size: 17px; line-height: 1.75; color: var(--text);
-      max-width: 820px; margin: 0 auto 14px;
+      max-width: 820px; margin: 0 0 14px;
     }
 
     /* ===== Challenge cards ===== */
@@ -209,10 +246,6 @@
     .card p { font-size: 14.5px; margin: 0; }
 
     /* ===== Method ===== */
-    .method-intro {
-      max-width: 760px; margin: 24px auto 0; text-align: center;
-      color: var(--text-soft);
-    }
     .method-fig {
       background: white; border: 1px solid var(--border);
       border-radius: var(--radius); padding: 28px;
@@ -485,14 +518,27 @@
 <!-- ============ HERO ============ -->
 <section id="top" class="hero">
   <div class="container">
-    <span class="eyebrow">Foundation Model for Behavioral Health</span>
+    <span class="eyebrow">Pretrained Actigraphy Transformer</span>
     <h1>
       A Foundation Model for Wearable Movement<br>
       Data in Mental Health Research
     </h1>
-    <p class="subtitle">
-      The <b style="color: var(--accent);">P</b>retrained <b style="color: var(--accent);">A</b>ctigraphy <b style="color: var(--accent);">T</b>ransformer is an open-source transformer pretrained on week-long, minute-level actigraphy from 21,538 NHANES participants — evaluated on medication use, sleep, and psychiatric outcomes with interpretable attention.
-    </p>
+
+    <div class="venue-badge">
+      <a href="https://www.embs.org/jbhi/" target="_blank" rel="noopener">
+        <span class="trophy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+            <path d="M4 22h16"/>
+            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+          </svg>
+        </span>
+        <span class="venue">IEEE Journal of Biomedical &amp; Health Informatics · 2026</span>
+      </a>
+    </div>
 
     <div class="authors">
       <a href="https://www.linkedin.com/in/franklin-ruan-0289b5140/">Franklin Y. Ruan</a><sup>1*</sup>,
@@ -512,7 +558,7 @@
 
     <div class="affil-logos">
       <a href="https://medicine.illinois.edu/" target="_blank" rel="noopener" aria-label="Carle Illinois College of Medicine, UIUC">
-        <img src="static/images/UIUCMed_logo.png" alt="Carle Illinois College of Medicine, UIUC">
+        <img src="static/images/UIUCMed_logo.png" alt="Carle Illinois College of Medicine, UIUC" class="logo-md">
       </a>
       <a href="https://www.gatech.edu/" target="_blank" rel="noopener" aria-label="Georgia Institute of Technology">
         <img src="static/images/GeorgiaTech_logo.png" alt="Georgia Institute of Technology">
@@ -601,9 +647,9 @@
 
 <!-- ============ ABSTRACT ============ -->
 <section id="abstract" class="soft abstract">
-  <div class="container" style="max-width: 880px;">
+  <div class="container">
     <span class="eyebrow">Abstract</span>
-    <h2 style="text-align:center;">An open foundation model for actigraphy</h2>
+    <h2>An open foundation model for actigraphy</h2>
     <p>
       Wearable movement data is collected by nearly all commercially available smartwatches and is a valuable resource for mental health research, reflecting fine-grained temporal behavioral trends. Despite its promise, the development of foundation models for health wearable modeling remains limited when compared to clinical image and text analysis.
     </p>
@@ -621,7 +667,7 @@
   <div class="container">
     <span class="eyebrow">The Challenge</span>
     <h2>Why actigraphy needs a foundation model</h2>
-    <p style="max-width: 740px;">Actigraphy has been used in clinical research since the 1970s, but the analytical tooling has not kept pace with what we now have for clinical text and images. Three main gaps motivated PAT.</p>
+    <p class="section-intro">Actigraphy has been used in clinical research since the 1970s, but the analytical tooling has not kept pace with what we now have for clinical text and images. Three main gaps motivated PAT.</p>
 
     <div class="cards-3">
       <div class="card">
@@ -649,7 +695,7 @@
     <span class="eyebrow">Method</span>
     <h2>PAT: patch-based transformer with masked autoencoder pretraining</h2>
 
-    <p class="method-intro">PAT applies a Vision-Transformer-style patching scheme (<a href="https://arxiv.org/abs/2010.11929" target="_blank" rel="noopener">ViT; Dosovitskiy et al., 2020</a>) to week-long, minute-level actigraphy (10,080 timesteps). The sequence is divided into non-overlapping patches, each mapped to an embedding via a trainable linear projection (or 1D convolution in <em>conv</em> variants) and combined with fixed sine-cosine positional embeddings.</p>
+    <p class="section-intro">PAT applies a Vision-Transformer-style patching scheme (<a href="https://arxiv.org/abs/2010.11929" target="_blank" rel="noopener">ViT; Dosovitskiy et al., 2020</a>) to week-long, minute-level actigraphy (10,080 timesteps). The sequence is divided into non-overlapping patches, each mapped to an embedding via a trainable linear projection (or 1D convolution in <em>conv</em> variants) and combined with fixed sine-cosine positional embeddings.</p>
 
     <figure class="method-fig">
       <img src="static/images/PAT_method.png" alt="PAT pretraining and fine-tuning architecture diagram"
@@ -684,7 +730,7 @@
   <div class="container">
     <span class="eyebrow">Headline Results</span>
     <h2>PAT-L outperforms or matches the strongest baseline on every task</h2>
-    <p style="max-width: 720px;">Largest gains on medication-use prediction, where psychotropic effects on sleep–wake rhythm and activity levels create actigraphy signatures the model can capture.</p>
+    <p class="section-intro">Largest gains on medication-use prediction, where psychotropic effects on sleep–wake rhythm and activity levels create actigraphy signatures the model can capture.</p>
 
     <div class="stats">
       <div class="stat">
@@ -927,10 +973,10 @@
   <div class="container">
     <span class="eyebrow">Interpretability</span>
     <h2>Attention organizes around daily behavioral rhythms</h2>
-    <p style="max-width: 760px;">
+    <p class="section-intro">
       Unlike most deep learning models for wearable data, PAT provides built-in interpretability through attention weights — no SHAP or LIME required. Population-level attention from the benzodiazepine model shows repeated off-diagonal bands at 24-hour offsets and consistent peaks concentrated around the morning activity transition.
     </p>
-    <p style="max-width: 760px;">
+    <p class="section-intro">
       <strong>Quantitative confirmation:</strong> 24-hour-lag autocorrelation of the attention profile was consistently positive across participants (mean = 0.36, <em>p</em> &lt; 0.0001), and attention was significantly enriched in a ±60-minute window around inferred wake transitions (mean enrichment ratio = 1.29, Wilcoxon <em>p</em> &lt; 0.0001).
     </p>
 
@@ -947,7 +993,7 @@
   <div class="container">
     <span class="eyebrow">Deployment</span>
     <h2>Built for accessibility, not just accuracy</h2>
-    <p style="max-width: 720px;">PAT was designed to be useful to the health researcher, not just benchmarked on a leaderboard. Every variant fits on a single consumer GPU and the full stack is open.</p>
+    <p class="section-intro">PAT was designed to be useful to the health researcher, not just benchmarked on a leaderboard. Every variant fits on a single consumer GPU and the full stack is open.</p>
 
     <div class="deploy-grid">
       <div class="deploy-item">
