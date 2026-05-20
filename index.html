@@ -153,9 +153,11 @@
       transition: transform 0.15s ease, box-shadow 0.15s ease;
       border: 1px solid var(--border);
       background: white; color: var(--text);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 2px 6px rgba(0,0,0,0.05);
     }
-    .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); text-decoration: none; }
-    .btn.primary { background: var(--text); color: white; border-color: var(--text); }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.10), 0 2px 4px rgba(0,0,0,0.06); text-decoration: none; }
+    .btn:active { transform: translateY(0); box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+    .btn.primary { color: var(--primary); border-color: var(--primary); }
     .btn svg { width: 16px; height: 16px; }
 
     /* ===== Hero animation ===== */
@@ -207,20 +209,27 @@
     .card p { font-size: 14.5px; margin: 0; }
 
     /* ===== Method ===== */
-    .method-grid {
-      display: grid; grid-template-columns: 1.1fr 1fr; gap: 36px; align-items: center;
-      margin-top: 28px;
+    .method-intro {
+      max-width: 760px; margin: 24px auto 0; text-align: center;
+      color: var(--text-soft);
     }
-    @media (max-width: 880px) { .method-grid { grid-template-columns: 1fr; } }
     .method-fig {
       background: white; border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow);
+      border-radius: var(--radius); padding: 28px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 12px 32px rgba(0,0,0,0.07);
       text-align: center;
+      max-width: 920px; margin: 32px auto 40px;
     }
-    .method-fig img { width: 100%; max-width: 520px; height: auto; }
-    .method-fig .cap { font-size: 12.5px; color: var(--text-mute); margin-top: 10px; font-style: italic; }
-    .method-grid ul { padding-left: 18px; margin: 12px 0; }
-    .method-grid li { color: var(--text-soft); margin-bottom: 6px; }
+    .method-fig img { width: 100%; max-width: 840px; height: auto; }
+    .method-fig .cap { font-size: 13px; color: var(--text-mute); margin-top: 14px; font-style: italic; }
+    .method-details {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 36px;
+      max-width: 980px; margin: 0 auto;
+    }
+    @media (max-width: 880px) { .method-details { grid-template-columns: 1fr; } }
+    .method-details h3 { margin-top: 0; }
+    .method-details ul { padding-left: 18px; margin: 12px 0; }
+    .method-details li { color: var(--text-soft); margin-bottom: 6px; }
 
     /* ===== Stat callouts ===== */
     .stats {
@@ -311,9 +320,14 @@
     .task-chart-meta { font-size: 12.5px; color: var(--text-mute); }
     .task-chart-desc { font-size: 13.5px; color: var(--text-soft); margin: 0 0 16px; }
 
+    .task-yaxis-title {
+      font-size: 11px; font-weight: 700; color: var(--text-soft);
+      letter-spacing: 0.06em; text-transform: uppercase;
+      margin: 14px 0 4px 0;
+    }
     .task-chart-area {
-      display: grid; grid-template-columns: 36px 1fr;
-      gap: 8px; margin-top: 12px;
+      display: grid; grid-template-columns: 44px 1fr;
+      gap: 8px; margin-top: 4px;
     }
     .task-yaxis {
       position: relative; height: 280px;
@@ -597,7 +611,7 @@
       We designed transformers with patch embeddings and used self-supervised masked autoencoder pretraining on minute-level, week-long actigraphy sequences to develop and investigate the <strong>Pretrained Actigraphy Transformer (PAT)</strong> — an open-source foundation model that combines week-long temporal modeling, psychiatric outcome evaluation, and full reproducibility on public data.
     </p>
     <p>
-      Pretrained on 21,538 U.S. participants from NHANES, PAT consistently outperformed non-foundation-model baselines across key mental health prediction tasks — including benzodiazepine and SSRI use, depression, and sleep abnormalities. Beyond predictive accuracy, PAT provides interpretable attention maps highlighting periods of daily activity most important for each prediction.
+      Pretrained on 21,538 U.S. participants from NHANES, PAT-L outperformed or matched the strongest non-foundation baseline on every task we evaluated — benzodiazepine and SSRI use, depression, and sleep abnormalities — with the largest gains on medication-use prediction. Beyond predictive accuracy, PAT provides interpretable attention maps highlighting periods of daily activity most important for each prediction.
     </p>
   </div>
 </section>
@@ -635,27 +649,31 @@
     <span class="eyebrow">Method</span>
     <h2>PAT: patch-based transformer with masked autoencoder pretraining</h2>
 
-    <div class="method-grid">
+    <p class="method-intro">PAT applies a Vision-Transformer-style patching scheme (<a href="https://arxiv.org/abs/2010.11929" target="_blank" rel="noopener">ViT; Dosovitskiy et al., 2020</a>) to week-long, minute-level actigraphy (10,080 timesteps). The sequence is divided into non-overlapping patches, each mapped to an embedding via a trainable linear projection (or 1D convolution in <em>conv</em> variants) and combined with fixed sine-cosine positional embeddings.</p>
+
+    <figure class="method-fig">
+      <img src="static/images/PAT_method.png" alt="PAT pretraining and fine-tuning architecture diagram"
+           onerror="this.outerHTML='<div style=\'padding:60px 20px;background:#f1f3f5;border-radius:8px;color:#6c757d;font-style:italic;font-size:14px;\'>[ Drop static/images/method.png here<br>(Figure 2 from the paper) ]</div>'">
+      <figcaption class="cap">Figure 2 from the paper: masked autoencoder pretraining (left) and downstream fine-tuning (right).</figcaption>
+    </figure>
+
+    <div class="method-details">
       <div>
-        <p>PAT applies a Vision-Transformer-style patching scheme to week-long, minute-level actigraphy (10,080 timesteps). The sequence is divided into non-overlapping patches, each mapped to an embedding via a trainable linear projection (or 1D convolution in <em>conv</em> variants) and combined with fixed sine-cosine positional embeddings.</p>
-        <h3 style="margin-top:18px;">Pretraining</h3>
+        <h3>Pretraining</h3>
         <ul>
-          <li><strong>Masked autoencoder</strong> on 21,538 NHANES participants (217M+ data points)</li>
+          <li><strong>Masked autoencoder pretraining</strong> (<a href="https://arxiv.org/abs/2111.06377" target="_blank" rel="noopener">MAE; He et al., 2022</a>) on 21,538 participants from <a href="https://www.cdc.gov/nchs/nhanes/index.htm" target="_blank" rel="noopener">NHANES</a> — the CDC's public health survey with worn-accelerometer recordings across a demographically diverse U.S. sample (217M+ minute-level data points)</li>
           <li><strong>90% masking ratio</strong> — encoder sees only 10% of patches, decoder reconstructs the full week</li>
           <li><strong>MSE loss on all patches</strong> — outperformed masked-only loss substantially (0.773 vs 0.541 avg AUC)</li>
           <li><strong>No smoothing</strong> — raw signal preserved fine-grained activity bursts</li>
         </ul>
-        <h3 style="margin-top:18px;">Fine-tuning</h3>
+      </div>
+      <div>
+        <h3>Fine-tuning</h3>
         <ul>
           <li>Patch embedding + pretrained encoder + task-specific classifier head</li>
           <li>Released variants: <strong>PAT-S (287K)</strong>, <strong>PAT-M (1.00M)</strong>, <strong>PAT-L (1.99M)</strong> params (plus <strong>PAT Conv-S/M/L</strong> variants with 1D-convolutional patch embeddings)</li>
           <li>Single-GPU fine-tuning — works on free Google Colab</li>
         </ul>
-      </div>
-      <div class="method-fig">
-        <img src="static/images/PAT_method.png" alt="PAT pretraining and fine-tuning architecture diagram"
-             onerror="this.outerHTML='<div style=\'padding:60px 20px;background:#f1f3f5;border-radius:8px;color:#6c757d;font-style:italic;font-size:14px;\'>[ Drop static/images/method.png here<br>(Figure 2 from the paper) ]</div>'">
-        <div class="cap">Figure 2 from the paper: masked autoencoder pretraining (left) and downstream fine-tuning (right).</div>
       </div>
     </div>
   </div>
@@ -665,24 +683,24 @@
 <section id="results">
   <div class="container">
     <span class="eyebrow">Headline Results</span>
-    <h2>PAT-L outperforms strong baselines across every task</h2>
+    <h2>PAT-L outperforms or matches the strongest baseline on every task</h2>
     <p style="max-width: 720px;">Largest gains on medication-use prediction, where psychotropic effects on sleep–wake rhythm and activity levels create actigraphy signatures the model can capture.</p>
 
     <div class="stats">
       <div class="stat">
-        <div class="big">+55.6%</div>
-        <div class="label">vs LSTM</div>
+        <div class="big">+7.4%</div>
+        <div class="label">AUC vs CNN-3D</div>
         <div class="sub">Benzodiazepine prediction</div>
       </div>
       <div class="stat">
-        <div class="big">+21.4%</div>
-        <div class="label">vs 1D CNN</div>
-        <div class="sub">Benzodiazepine prediction</div>
+        <div class="big">+5.0%</div>
+        <div class="label">AUC vs CNN-3D</div>
+        <div class="sub">Sleep abnormality detection</div>
       </div>
       <div class="stat">
-        <div class="big">+14.8%</div>
-        <div class="label">vs ConvLSTM</div>
-        <div class="sub">Benzodiazepine prediction</div>
+        <div class="big">5 / 5</div>
+        <div class="label">tasks improved</div>
+        <div class="sub">vs strongest non-foundation baseline</div>
       </div>
       <div class="stat">
         <div class="big">21,538</div>
@@ -703,6 +721,7 @@
           <div class="task-chart-meta" id="task-chart-meta"></div>
         </div>
         <p class="task-chart-desc" id="task-chart-desc"></p>
+        <div class="task-yaxis-title">AUC&nbsp;&nbsp;↑ higher is better</div>
         <div class="task-chart-area">
           <div class="task-yaxis" id="task-yaxis"></div>
           <div class="task-plot">
@@ -712,7 +731,7 @@
           </div>
         </div>
         <div class="task-chart-footnote">
-          Bars show average AUC across training set sizes (n=500, 1k, 2.5k, full). PAT-L compared against the strongest non-foundation baselines from Tables VI–VII of the paper.
+          AUC (Area Under the ROC Curve) measures binary-classification quality on a 0–1 scale, where 1.0 is perfect prediction. Bars show average AUC across training-set sizes (n = 500, 1k, 2.5k, full); PAT-L is compared against the strongest non-foundation baselines from Tables VI–VII of the paper.
         </div>
       </div>
     </div>
@@ -724,7 +743,7 @@
             id: 'benzo',
             label: 'Benzodiazepine Use',
             sub: 'PAT-L AUC 0.767',
-            title: 'Benzodiazepine Use Prediction',
+            title: 'AUC for Benzodiazepine Use Prediction',
             meta: 'n = 7,769 participants',
             desc: 'PAT-L\'s largest gain. Benzodiazepines treat anxiety, insomnia, and seizures, and can alter sleep–wake rhythm and activity levels detectable in actigraphy.',
             models: [
@@ -740,7 +759,7 @@
             id: 'ssri',
             label: 'SSRI Use',
             sub: 'PAT-L AUC 0.700',
-            title: 'SSRI Use Prediction',
+            title: 'AUC for SSRI Use Prediction',
             meta: 'n = 7,769 participants',
             desc: 'SSRIs are common antidepressants that can influence motor activity, circadian timing, and sleep architecture. PAT-L outperforms every baseline, including the strong CNN-3D.',
             models: [
@@ -756,7 +775,7 @@
             id: 'sleep-dis',
             label: 'Sleep Disorder',
             sub: 'PAT-L AUC 0.632',
-            title: 'Sleep Disorder Classification',
+            title: 'AUC for Sleep Disorder Classification',
             meta: 'n = 5,429 participants',
             desc: 'Self-reported lifetime sleep disorder (insomnia, apnea, restless leg). PAT-L leads on raw AUC, but predictions are not independently significant after adjusting for demographics and depression severity — the one outcome where this happens.',
             models: [
@@ -772,7 +791,7 @@
             id: 'sleep-abn',
             label: 'Sleep Abnormality',
             sub: 'PAT-L AUC 0.665',
-            title: 'Sleep Abnormality Detection',
+            title: 'AUC for Sleep Abnormality Detection',
             meta: 'n = 5,429 participants',
             desc: 'Composite label: self-reported sleep disorder, or regularly sleeping ≥12 h or ≤5 h. PAT-L\'s second-largest absolute gain over baselines.',
             models: [
@@ -788,7 +807,7 @@
             id: 'depression',
             label: 'Depression (PHQ-9)',
             sub: 'PAT-L AUC 0.589',
-            title: 'Depression Classification (PHQ-9 ≥ 10)',
+            title: 'AUC for Depression Classification (PHQ-9 ≥ 10)',
             meta: 'n = 4,800 participants',
             desc: 'The hardest task. PAT-L edges out every baseline (CNN-3D 0.586 → PAT-L 0.589), but margins are thin — consistent with the paper\'s note that actigraphy alone provides only partial signal for complex psychopathological features.',
             models: [
@@ -802,9 +821,9 @@
           }
         ];
 
-        const SCALE_MIN = 0.45;
-        const SCALE_MAX = 0.80;
-        const Y_TICKS   = [0.50, 0.60, 0.70, 0.80];
+        const SCALE_MIN = 0.0;
+        const SCALE_MAX = 1.0;
+        const Y_TICKS   = [0.00, 0.25, 0.50, 0.75, 1.00];
         const explorer = document.getElementById('task-explorer');
         const taskList = explorer.querySelector('.task-list');
         const titleEl  = document.getElementById('task-chart-title');
@@ -829,6 +848,7 @@
             label.style.top = top + '%';
             yAxisEl.appendChild(label);
 
+            if (v === SCALE_MIN) return; // baseline span handles the 0 axis line
             const line = document.createElement('span');
             line.style.top = top + '%';
             gridEl.appendChild(line);
